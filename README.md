@@ -1,11 +1,17 @@
-# [Título del trabajo]
+# [Blackjack y más]
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+[Hola! Nuestro trabajo consiste en crear varios juegos de cartas, poder apostar una cantidad de fichas y poder jugar hasta cuatro 
+jugadores a la vez. Además, diseñaremos una app para que cada persona pueda jugar desde su móvil de manera independiente.]
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+- Alberto López Ramos @albertolopezramos
+- Juan Ignacio Martín Moreno
+- Jesús Pacheco Alonso
+- Gregorio Marianini Ríos
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+- Crear uno o más juegos de cartas programados con C++.
+- Crear una app donde se visualicen las cartas del usuario.
+- Aplicar conocimientos de estadística para crear una máquina que calcule cuál es la mejor jugada.
