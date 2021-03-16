@@ -7,7 +7,7 @@ jugadores a la vez. Además, diseñaremos una app para que cada persona pueda ju
 
 - Alberto López Ramos @albertolopezramos
 - Juan Ignacio Martín Moreno @juanignacio-martin
-- Jesús Pacheco Alonso
+- Jesús Pacheco Alonso @jesuspachecoalonso
 - Gregorio Marianini Ríos
 
 ## Objetivos del trabajo
