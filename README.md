@@ -6,7 +6,7 @@ jugadores a la vez. Además, diseñaremos una app para que cada persona pueda ju
 ## Integrantes del equipo
 
 - Alberto López Ramos @albertolopezramos
-- Juan Ignacio Martín Moreno
+- Juan Ignacio Martín Moreno @juanignacio-martin
 - Jesús Pacheco Alonso
 - Gregorio Marianini Ríos
 
