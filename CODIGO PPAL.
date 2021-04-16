@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+// Funciones prototipo
+int menu_principal(void);
+void configura(void);
+int main(void)
+{
+	int opc;
+	// Tareas de configuración y carga
+	configura();
+	// Bucle principal de la aplicación
+	do
+	{
+		opc = menu_principal();
+		switch (opc)
+		{
+		case 1:
+			printf("\nPregunta en el siguiente orden:\n");
+			printf("\ta. Seleccionar el modo de juego (modo normal o modo practica)\n");
+			printf("\tb. Seleccionar el numero de jugadores (4 maximo en el caso del modo normal y unicamente 1 para el modo practica)\n");
+			printf("\tc. Identificacion (nombre de usuario y contraseña)\n");
+			
+			//CODIGO DEL JUEGO. VERSION NO DEFINITIVA
+
+
+			break;//FIN DE LA PRIMERA OPCION
+		case 2:
+			printf("\n------------------------\n");
+			printf("\nCOMO JUGAR AL BLACKJACK:\n");
+			printf("\n------------------------\n");
+
+			//INSERTAR FICHERO (como_jugar_al_blackjack.txt)
+			
+			
+			break;//FIN DE LA SEGUNDA OPCION
+		case 3:
+			printf("\n------------------------\n");
+			printf("\n\tREGLAS:\n");
+			printf("\n------------------------\n");
+
+			//INSERTAR FICHERO (reglas.txt)
+
+			break;//FIN DE LA TERCERA OPCION
+		case 4:
+			
+			//INSERTAR NOMBRE Y CONTRASEÑA E INFORMA SOBRE MANOS GANADAS, MANOS PERDIDAS, FICHAS NETAS, FICHAS GANADAS, FICHAS PERDIDAS.
+			
+			break;//FIN DE LA CUARTA OPCION
+		case 5:
+			return 0;
+			break;
+		}
+	} while (opc != 5);
+	// CIERRE DEL PROGRAMA
+}
+int menu_principal(void)
+{
+	int opcion;
+	do
+	{
+		printf("1. Jugar al Blackjack.\n");
+		printf("2. Como jugar.\n");
+		printf("3. Reglas.\n");
+		printf("4. Informacion jugadores.\n");
+		printf("5. Cerrar el juego.\n");
+		printf("Seleccione opción:");
+		scanf_s("%d", &opcion);
+		if (opcion < 1 || opcion>5)
+			printf("\nOpción inexistente.\n\n");
+	} while (opcion < 1 || opcion>5);
+	return opcion;
+}
+void configura(void)
+{
+	setlocale(LC_ALL, "spanish");
+}
