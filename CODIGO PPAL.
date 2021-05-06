@@ -1,14 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <locale.h>
+#include <windows.h>
+#include <string.h>
+#include <conio.h>
+
+#define DIMMANO 7
+#define DIMMANO 7
+#define MAX_BUFFER 200
+#define MAX_INTENTOS_READ 4
+#define MS_ENTRE_INTENTOS 250
+#define SI 1
+#define NO 0
+
+
+
 // Funciones prototipo
 int menu_principal(void);
+
 void configura(void);
+
+void blackjack();
+
+int modo_normal();
+
+int un_jugador();
+
+void cont_cartas(int[], int[], int);
+
+int reval_as(int, int, int[], int[], int*);
+
+void palo_cartas(int[], int);
+
+
+//ESTRUCTURAS
+typedef struct recop_dat_bas {
+	int fichas = 100;
+	int fwon = 0;
+	int flost = 0;
+	int fichasnetas = 0;
+	int wins = 0;
+	int defeats = 0;
+	int ties = 0;
+
+
+}RDB; //Recopilacion de Datos Base del usuario
+
+
 int main(void)
 {
 	int opc;
 	// Tareas de configuración y carga
 	configura();
+
+	printf("\t\t\t ---BIENVENIDO---\n\n\t\t");
+	system("PAUSE");
+
+
+
 	// Bucle principal de la aplicación
 	do
 	{
@@ -16,21 +66,15 @@ int main(void)
 		switch (opc)
 		{
 		case 1:
-			printf("\nPregunta en el siguiente orden:\n");
-			printf("\ta. Seleccionar el modo de juego (modo normal o modo practica)\n");
-			printf("\tb. Seleccionar el numero de jugadores (4 maximo en el caso del modo normal y unicamente 1 para el modo practica)\n");
-			printf("\tc. Identificacion (nombre de usuario y contraseña)\n");
-			
-			//CODIGO DEL JUEGO. VERSION NO DEFINITIVA
 
-
+			blackjack(); 
 			break;//FIN DE LA PRIMERA OPCION
 		case 2:
 			printf("\n------------------------\n");
 			printf("\nCOMO JUGAR AL BLACKJACK:\n");
 			printf("\n------------------------\n");
 
-			//INSERTAR FICHERO (como_jugar_al_blackjack.txt)
+			//INSERTAR FICHERO (como_jugar_al_blackjack.txt) (fichero de github)
 			
 			
 			break;//FIN DE LA SEGUNDA OPCION
@@ -39,12 +83,12 @@ int main(void)
 			printf("\n\tREGLAS:\n");
 			printf("\n------------------------\n");
 
-			//INSERTAR FICHERO (reglas.txt)
+			//INSERTAR FICHERO (reglas.txt) (fichero de github)
 
 			break;//FIN DE LA TERCERA OPCION
 		case 4:
 			
-			//INSERTAR NOMBRE Y CONTRASEÑA E INFORMA SOBRE MANOS GANADAS, MANOS PERDIDAS, FICHAS NETAS, FICHAS GANADAS, FICHAS PERDIDAS.
+			
 			
 			break;//FIN DE LA CUARTA OPCION
 		case 5:
@@ -54,16 +98,21 @@ int main(void)
 	} while (opc != 5);
 	// CIERRE DEL PROGRAMA
 }
+
+
+//ARGUMENTO FUNCIONES
+
+//se desplega el menu principal
 int menu_principal(void)
 {
 	int opcion;
 	do
 	{
-		printf("1. Jugar al Blackjack.\n");
-		printf("2. Como jugar.\n");
-		printf("3. Reglas.\n");
-		printf("4. Informacion jugadores.\n");
-		printf("5. Cerrar el juego.\n");
+		printf("\n\t 1.JUGAR AL BLACKJACK\n\n");
+		printf("\t 2.COMO JUGAR\n\n");
+		printf("\t 3.REGLAS\n\n");
+		printf("\t 4.INFORMACION DEL USUARIO\n\n");
+		printf("\t 5.CERRAR EL JUEGO\n\n");
 		printf("Seleccione opción:");
 		scanf_s("%d", &opcion);
 		if (opcion < 1 || opcion>5)
@@ -71,7 +120,708 @@ int menu_principal(void)
 	} while (opcion < 1 || opcion>5);
 	return opcion;
 }
+
 void configura(void)
 {
 	setlocale(LC_ALL, "spanish");
+}
+
+//funcion que se inicia cuando se escoje la opcion 1 (jugar blackjack)
+void blackjack() {
+
+	int mod = 0;
+
+
+	do {
+		printf("\t\t\t 1.MODO NORMAL\n\n");
+		printf("\t\t\t 2.MODO PRACTICA\n\n");
+
+
+
+		printf("Escoje un modo: ");
+		scanf_s("%d", &mod);
+
+		if (mod == 1) {
+			mod = modo_normal();
+		}
+		else if (mod == 2) {
+			//modo_practica();
+			printf("Modo practica aun si programar :)\n");
+		}
+		else {
+			printf("\n\nOpcion no valida\n");
+		}
+	} 	while (mod != 1 && mod != 2);
+
+}
+
+//se inicia si se escoge el modo normal
+int modo_normal() {
+
+	int jug, back, r;
+
+
+	do {
+		printf("\n\n\tINTRODUZCA LA CANTIDAD DE JUGADORES (por ahora solo esta programado para jugar 1 jugador): ");
+		scanf_s("%d", &jug);
+		printf("\n\n");
+
+		if (jug == 1 || jug == 2) {
+			back = un_jugador();
+
+			if (back == 0) {
+				printf("\n\nDesea volver al menu principal?\n");
+				printf("\t1.Volver al menu principal");
+				printf("\t2.Salir del juego");
+				do {
+					printf("\nInserte opcion: ");
+					scanf_s("%d", &r);
+				} while (r != 1 && r != 2);
+
+				if (r == 1) {
+					return 0;
+				}
+				else {
+					printf("\n\n\t\t---GRACIAS POR JUGAR. ---");
+					return 3;
+				}
+			}
+		}
+
+		else
+			printf("\n\nOpcion no valida");
+
+	} while (jug != 1 && jug != 2);
+
+}
+
+//codigo base del juego. por ahora se llama "un_jugador" porque esta programado para un solo jugador. version no definitiva.
+int un_jugador() {
+
+	int muser[DIMMANO], mcrupier[DIMMANO]; //declaro los vectores donde recogera los caracteres que equivalen a las cartas de usuario y crupier.
+	int valmuser[DIMMANO], valmcrupier[DIMMANO]; //declaro los vectores que recogen el valor de las cartas de usuario y crupier
+	int tmuser = 0, tmcrupier = 0, c3 = 0; //tamaño de la mano del usuario y crupier. tercer condicional (caracter-valor)
+	int c2 = 0, af = 0; // segundo condicional 1 (eleccion de cartas). segundo condicional 2 (afirmacion de eleccion)
+	int sumuser = 0, sumcrupier = 0;// suma cartas usuario y crupier inicializado a 0.
+	int* pvalmuser, * pvalmcrupier;
+	int onoff = 0; //permite volver a jugar tantas veces como desee.
+	int f_ap = 0; //fichas apostadas en ese turno
+	int info; //sirve para calificar en la funcion info_user si ha ganado, empatado o perdido.
+
+	RDB user1;
+
+	srand(time(NULL));
+
+
+	pvalmuser = (int*)malloc(tmuser * sizeof(int));//determinamos un puntero que contiene la informacion sobre los valores del usuario
+
+	//ponemos el puntero apuntando al vector que recoga la info de las cartas del usuario
+	pvalmuser = &valmuser[0];
+	pvalmcrupier = &valmcrupier[0];
+
+	do {
+
+		do {
+			printf("Realice su apuesta (50 fichas max): ");
+			scanf_s("%d", &f_ap);
+			if (f_ap > 50)
+				printf("\n\n\tCantidad de fichas excedida.\n\n");
+			else if (f_ap <= 0)
+				printf("\n\n\tNo puedes apostar esas fichas, no seas tramposo.\n\n");
+			else if (f_ap > user1.fichas)
+				printf("\n\n\tNo puedes apostar mas fichas de las que tienes.\n\n");
+			else
+				printf("\n\n\tFichas apostadas: %d", f_ap);
+		} while (f_ap > 50 || f_ap <= 0 || f_ap > user1.fichas);
+
+
+		printf("\n\nTU MANO: \n");
+
+		//BUCLE REPARTO DE LAS PRIMERAS CARTAS DEL USUARIO
+		while (c3 < 2) {
+			printf("\tCarta %d: ", (c3 + 1));
+			//getchar();
+			//scanf_s("%d", &muser[c3]);
+
+			muser[c3] = rand() % 52;
+
+			//printf("%d\n", muser[c3]);
+
+			cont_cartas(muser, valmuser, c3);
+
+			palo_cartas(muser, c3);
+
+			sumuser = sumuser + *pvalmuser;
+
+			if (sumuser > 21) {
+				sumuser = reval_as(sumuser, c3, valmuser, muser, pvalmuser); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+				pvalmuser++;
+				c3++;
+				tmuser++;
+			}
+			else {
+				pvalmuser++;
+				c3++;
+				tmuser++;
+			}
+
+			system("PAUSE");
+		}
+		//FIN BUCLE REPARTO DE LAS PRIMERAS CARTAS DEL USUARIO
+
+		printf("TU SUMA ES: %d. \n", sumuser);
+
+		c3 = 0;
+
+		printf("\n\nMANO DEL CRUPIER: \n");
+
+		//BUCLE REPARTO DE LA PRIMERA CARTA DEL CRUPIER
+		while (c3 < 1) {
+			printf("\tCarta %d: ", (c3 + 1));
+			//getchar();
+			//scanf_s("%d", &muser[c3]);
+
+			mcrupier[c3] = rand() % 52;
+
+			//printf("%d\n", mcrupier[c3]);
+
+			cont_cartas(mcrupier, valmcrupier, c3);
+			palo_cartas(mcrupier, c3);
+
+			sumcrupier = sumcrupier + *pvalmcrupier;
+
+			pvalmuser++;
+			c3++;
+			tmcrupier++;
+
+			system("PAUSE");
+		}
+		//FIN DEL BUCLE REPARTO DE LA PRIMERA CARTA DEL CRUPIER
+
+		printf("LA SUMA DEL CRUPIER ES: %d. \n", sumcrupier);
+
+		//SI EL USUARIO TIENE BLACKJACK
+		if (sumuser == 21) {
+			printf("\n\n\t\t---ENHORABUENA. TIENES BLACKJACK---\n");
+			c3 = 1; //volvemos a revalorizar la variable del bucle a 1, ya que esta sacada la primera carta del crupier.
+
+			pvalmcrupier = (int*)malloc(tmcrupier * sizeof(int));//inicializo los vectores del crupier, aunque luego vuelven a ser modificados por el bucle de la mano final (por ese motivo, el tamaño se pone a 3.)
+
+			pvalmcrupier = &valmcrupier[1];
+
+			printf("MANO DEL CRUPIER: \n");
+
+			//BUCLE REPARTO DE LA SEGUNDA CARTA DEL CRUPIER
+			while (c3 < 2) {
+				printf("\tCarta %d: ", (c3 + 1));
+				//getchar();
+				//scanf_s("%d", &mcrupier[c3]);
+
+				mcrupier[c3] = rand() % 52;
+
+				//printf("%d\n", mcrupier[c3]);
+
+				cont_cartas(mcrupier, valmcrupier, c3);
+				palo_cartas(mcrupier, c3);
+
+				sumcrupier = sumcrupier + *pvalmcrupier;
+
+				if (sumcrupier > 21) {
+					sumcrupier = reval_as(sumcrupier, c3, valmcrupier, mcrupier, pvalmcrupier); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+					pvalmcrupier++;
+					c3++;
+					tmcrupier++;
+				}
+				else {
+					pvalmcrupier++;
+					c3++;
+					tmcrupier++;
+				}
+
+				system("PAUSE");
+			}
+			//FIN DEL BUCLE REPARTO DE LA SEGUNDA CARTA DEL CRUPIER
+
+			printf("LA SUMA DEL CRUPIER ES: %d.\n", sumcrupier);
+
+			system("PAUSE");
+
+			if (sumuser > sumcrupier) {
+
+				f_ap = (float)(f_ap * 1.5);
+				printf("\n\n\t\t---HAS GANADO. AHI TIENES TUS FICHAS---");
+				printf("\n\t\t\t HAS GANADO %d FICHAS", f_ap);
+				user1.fichas = user1.fichas + f_ap;
+				user1.wins++;
+				user1.fwon += f_ap;
+
+				if (sumcrupier == 21 && sumuser == 21) {
+					printf("\n\n\t\t---EL CRUPIER TIENE BLACKJACK. MALA SUERTE---\n");
+					printf("\n\n\t\t---EMPATE. SE TE DEVUELVEN TUS FICHAS---");
+					user1.ties++;
+				}
+			}
+		}
+
+		//SI EL USUARIO NO TIENE BLACKJACK
+
+		else {
+
+			c3 = 2;//recolocamos la variable, la cual ha sido modificada para repartir la primera carta al crupier.
+			pvalmuser = &valmuser[2];
+
+			//BUCLE DEL JUEGO PRINCIPAL DEL USUARIO.
+
+			do {
+				//si no tienes suficientes fichas para poder ejecutar la opcion 3
+				if (f_ap * 2 > user1.fichas) {
+
+					printf("\n\t1. Plantarse (1).");
+					printf("\t2. Pedir carta (2).");
+					printf("\nElija una opcion: ");
+					scanf_s("%d", &c2);
+					switch (c2)
+					{
+					case 1: //Permite plantarse
+						printf("Tu suma es %d. \n", sumuser);
+						af = 0;
+						break;// FIN CASE 1
+
+					case 2: //Permite pedir otra carta más
+						do {
+							printf("\nIntroduzca la siguiente carta del usuario: \n");
+							printf("\tCarta %d: ", (c3 + 1));
+							//getchar();
+							//scanf_s("%d", &muser[c3]);
+
+							muser[c3] = rand() % 52;
+
+							//printf("%d\n", muser[c3]);
+
+							cont_cartas(muser, valmuser, c3);
+							palo_cartas(muser, c3);
+
+							sumuser = sumuser + *pvalmuser;
+
+							if (sumuser > 21) {
+								sumuser = reval_as(sumuser, c3, valmuser, muser, pvalmuser); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+								pvalmuser++;
+								c3++;
+								tmuser++;
+							}
+							else {
+								pvalmuser++;
+								c3++;
+								tmuser++;
+							}
+
+
+							printf("TU SUMA ES: %d. \n", sumuser);
+
+							if (sumuser < 21) {
+								printf("Desea otra carta mas?\n");
+								printf("\t0. No.");
+								printf("\t1. Si.");
+								do {
+									printf("\nInserte opcion: ");
+									scanf_s("%d", &af);
+								} while (af != 1 && af != 0);
+
+								system("PAUSE");
+							}
+
+
+						} while (tmcrupier < 8 && sumcrupier <= 17 && af == 1);
+
+						printf("TU SUMA FINAL ES: %d. \n", sumuser);
+						break;//FIN CASE 2
+
+						if (sumuser <= 21)
+							printf("TU SUMA ES: %d. \n", sumuser);
+						else if (sumuser > 21)
+							printf("TU SUMA ES: %d. SE PASA DE 21. HAS PERDIDO. \n", sumuser);
+
+						af = 0;
+
+						system("PAUSE");
+						break; //FIN DEL CASE 3
+
+					default: //si no has introducido ningun valor de los de antes.
+						printf("Valor no valido. Introduzca un valor entre el 1 o el 2.");
+						break;
+
+					}
+				}
+
+				//si tienes suficientes fichas para poder ejecutar la opcion 3
+
+				else {
+					printf("\n\t1. Plantarse (1).");
+					printf("\t2. Pedir carta (2).");
+					printf("\t3. Doblar y pedir (3).");
+					printf("\nElija una opcion: ");
+					scanf_s("%d", &c2);
+					switch (c2)
+					{
+					case 1: //Permite plantarse
+						printf("Tu suma es %d. \n", sumuser);
+						af = 0;
+						break;// FIN CASE 1
+
+					case 2: //Permite pedir otra carta más
+						do {
+							printf("Introduzca la siguiente carta del usuario: \n");
+							printf("\tCarta %d: ", (c3 + 1));
+							//getchar();
+							//scanf_s("%d", &muser[c3]);
+
+							muser[c3] = rand() % 52;
+
+							//printf("%d\n", muser[c3]);
+
+							cont_cartas(muser, valmuser, c3);
+							palo_cartas(muser, c3);
+
+							sumuser = sumuser + *pvalmuser;
+
+							if (sumuser > 21) {
+								sumuser = reval_as(sumuser, c3, valmuser, muser, pvalmuser); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+								pvalmuser++;
+								c3++;
+								tmuser++;
+							}
+							else {
+								pvalmuser++;
+								c3++;
+								tmuser++;
+							}
+
+
+							printf("TU SUMA ES: %d. \n", sumuser);
+
+							system("PAUSE");
+
+							if (sumuser < 21) {
+								printf("Desea otra carta mas?\n");
+								printf("\t0. No.");
+								printf("\n\t1. Si.");
+								do {
+									printf("\nInserte opcion: ");
+									scanf_s("%d", &af);
+								} while (af != 1 && af != 0);
+
+
+							}
+
+
+						} while (c3 < 8 && sumuser <= 21 && af == 1);
+
+						printf("TU SUMA FINAL ES: %d. \n", sumuser);
+						break;//FIN CASE 2
+
+					case 3: //Permite doblar tu apuesta y pedir una única carta más
+
+						f_ap = f_ap * 2;
+
+						printf("Tu apuesta final es: %d fichas.\n\n", f_ap);
+						printf("Introduzca la siguiente carta del usuario: \n");
+						printf("\tCarta %d: ", (c3 + 1));
+						//getchar();
+						//scanf_s("%d", &muser[c3]);
+
+						muser[c3] = rand() % 52;
+
+						//printf("%d\n", muser[c3]);
+
+						cont_cartas(muser, valmuser, c3);
+						palo_cartas(muser, c3);
+
+						sumuser = sumuser + *pvalmuser;
+
+						if (sumuser > 21) {
+							sumuser = reval_as(sumuser, c3, valmuser, muser, pvalmuser); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+							pvalmuser++;
+							c3++;
+							tmuser++;
+						}
+						else {
+							pvalmuser++;
+							c3++;
+							tmuser++;
+						}
+
+						if (sumuser <= 21)
+							printf("TU SUMA ES: %d. \n", sumuser);
+						else if (sumuser > 21)
+							printf("TU SUMA ES: %d. SE PASA DE 21. HAS PERDIDO. \n", sumuser);
+
+						af = 0;
+
+						system("PAUSE");
+						break; //FIN DEL CASE 3
+
+					default: //si no has introducido ningun valor de los de antes.
+						printf("Valor no valido. Introduzca un valor entre el 1 o el 3.");
+						break;
+
+					}
+
+				}
+
+			} while (af == 1 && sumuser <= 21);
+
+			//FIN DEL BUCLE DEL JUEGO PRINCIPAL DEL USUARIO.
+
+			if (sumuser > 21) //si te has pasado de 21, se le pone la suma a 0 para cumplir la condicion.
+				sumuser = 0;
+			//si no te pasas de 21, la partida continua.
+
+			else {
+
+
+				c3 = 1; //volvemos a revalorizar la variable del bucle a 1, ya que esta sacada la primera carta del crupier.
+				pvalmcrupier = (int*)malloc(tmcrupier * sizeof(int));//inicializo los vectores del crupier, aunque luego vuelven a ser modificados por el bucle de la mano final (por ese motivo, el tamaño se pone a 3.)
+
+				pvalmcrupier = &valmcrupier[1];
+
+				printf("Introduce los caracteres en referencia a las cartas del crupier: \n");
+
+
+				//BUCLE REPARTO DE LA SEGUNDA CARTA DEL CRUPIER
+				while (c3 < 2) {
+					printf("\tCarta %d: ", (c3 + 1));
+					//getchar();
+					//scanf_s("%d", &mcrupier[c3]);
+
+					mcrupier[c3] = rand() % 52;
+
+					//printf("%d\n", mcrupier[c3]);
+
+					cont_cartas(mcrupier, valmcrupier, c3);
+					palo_cartas(mcrupier, c3);
+
+					sumcrupier = sumcrupier + *pvalmcrupier;
+
+					if (sumcrupier > 21) {
+						sumcrupier = reval_as(sumcrupier, c3, valmcrupier, mcrupier, pvalmcrupier); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+						pvalmcrupier++;
+						c3++;
+						tmcrupier++;
+					}
+					else {
+						pvalmcrupier++;
+						c3++;
+						tmcrupier++;
+					}
+
+					system("PAUSE");
+				}
+				//FIN DEL BUCLE REPARTO DE LA SEGUNDA CARTA DEL CRUPIER
+
+				printf("LA SUMA DEL CRUPIER ES: %d.\n", sumcrupier);
+
+				system("PAUSE");
+
+				if (sumcrupier == 21)
+					printf("\n\n\t\t---EL CRUPIER TIENE BLACKJACK. MALA SUERTE---\n");
+
+				//BUCLE DEL JUEGO PRINCIPAL DEL CRUPIER.
+				else if (sumcrupier < 17) {
+
+					do {
+						printf("Introduzca la siguiente carta del crupier: \n");
+						printf("\tCarta %d: ", (c3 + 1));
+						//getchar();
+						//scanf_s("%d", &mcrupier[c3]);
+
+						mcrupier[c3] = rand() % 52;
+
+						//printf("%d\n", mcrupier[c3]);
+
+						cont_cartas(mcrupier, valmcrupier, c3);
+						palo_cartas(mcrupier, c3);
+
+						sumcrupier = sumcrupier + *pvalmcrupier;
+
+						if (sumcrupier > 21) {
+							sumcrupier = reval_as(sumcrupier, c3, valmcrupier, mcrupier, pvalmcrupier); //revalorarizacion de la carta AS. de valer 11 pasa a valer 1.
+							pvalmcrupier++;
+							c3++;
+							tmcrupier++;
+						}
+						else {
+							pvalmcrupier++;
+							c3++;
+							tmcrupier++;
+						}
+
+						if (sumcrupier <= 21)
+							printf("LA SUMA DEL CRUPIER ES: %d. \n", sumcrupier);
+						else if (sumcrupier > 21) {
+							printf("LA SUMA DEL CRUPIER ES: %d. SE PASA DE 21.\n", sumcrupier);
+						}
+
+
+						system("PAUSE");
+
+					} while (tmcrupier < 8 && sumcrupier < 17);
+				}
+				//FIN DEL BUCLE DEL JUEGO PRINCIPAL DEL CRUPIER.
+
+				if (sumcrupier > 21) //si te has pasado de 21, se le pone la suma a 0 para cumplir la condicion.
+					sumcrupier = 0;
+
+			}
+
+
+
+			if (sumuser < sumcrupier) {
+				printf("\n\n\t\t---HA GANADO EL CRUPIER. MALA SUERTE---");
+				printf("\n\t\t\t HAS PERDIDO %d FICHAS", f_ap);
+
+				user1.fichas = user1.fichas - f_ap;
+
+				user1.defeats++;
+				user1.flost += f_ap;
+			}
+			else if (sumuser == sumcrupier) {
+				printf("\n\n\t\t---EMPATE. SE TE DEVUELVEN TUS FICHAS---");
+				user1.ties++;
+			}
+			else if (sumuser > sumcrupier) {
+				printf("\n\n\t\t---HAS GANADO. AHI TIENES TUS FICHAS---");
+				printf("\n\t\t\t HAS GANADO %d FICHAS", f_ap);
+				user1.fichas = user1.fichas + f_ap;
+				user1.wins++;
+				user1.fwon += f_ap;
+			}
+
+		}
+
+		printf("\n\nFichas restantes: %d fichas", user1.fichas);
+
+		user1.fichasnetas = user1.fwon - user1.flost;
+
+		if (user1.fichas == 0) {
+			printf("\n\n\t\t---TE HAS QUEDADO SIN FICHAS :(---");
+			printf("\n\t\t\t FIN DE LA PARTIDA\n");
+			system("PAUSE");
+			break;
+		}
+
+		else {
+			printf("\n\nDesea volver a jugar?");
+			printf("\n\t0. No.");
+			printf("\t1. Si.");
+
+			do {
+				printf("\nInserte opcion: ");
+				scanf_s("%d", &onoff);
+			} while (af != 1 && af != 0);
+		}
+
+		sumcrupier = 0;
+		tmcrupier = 0;
+		pvalmcrupier = &valmcrupier[0];
+		pvalmuser = &valmuser[0];
+		c3 = 0;
+		tmuser = 0;
+		sumuser = 0;
+		c2 = 0;
+		f_ap = 0;
+
+	} while (onoff == 1 || user1.fichas == 0);
+
+	return onoff;
+}
+
+//asocia su valor aleatorio con la correspondiente numeracion de las cartas: As, 2, 3,..., J, Q K.
+void cont_cartas(int mano[], int valmano[], int c3) {
+
+
+	if (0 <= mano[c3] && mano[c3] <= 3) {
+		valmano[c3] = 11;
+		printf("As");
+	}
+	else if (4 <= mano[c3] && mano[c3] <= 7) {
+		valmano[c3] = 2;
+		printf("2");
+	}
+	else if (8 <= mano[c3] && mano[c3] <= 11) {
+		valmano[c3] = 3;
+		printf("3");
+	}
+	else if (12 <= mano[c3] && mano[c3] <= 15) {
+		valmano[c3] = 4;
+		printf("4");
+	}
+	else if (16 <= mano[c3] && mano[c3] <= 19) {
+		valmano[c3] = 5;
+		printf("5");
+	}
+	else if (20 <= mano[c3] && mano[c3] <= 23) {
+		valmano[c3] = 6;
+		printf("6");
+	}
+	else if (24 <= mano[c3] && mano[c3] <= 27) {
+		valmano[c3] = 7;
+		printf("7");
+	}
+	else if (28 <= mano[c3] && mano[c3] <= 31) {
+		valmano[c3] = 8;
+		printf("8");
+	}
+	else if (32 <= mano[c3] && mano[c3] <= 35) {
+		valmano[c3] = 9;
+		printf("9");
+	}
+	else if (36 <= mano[c3] && mano[c3] <= 51) {
+		valmano[c3] = 10;
+		if (36 <= mano[c3] && mano[c3] <= 39)
+			printf("10");
+		else if (40 <= mano[c3] && mano[c3] <= 43)
+			printf("J");
+		else if (44 <= mano[c3] && mano[c3] <= 47)
+			printf("Q");
+		else if (48 <= mano[c3] && mano[c3] <= 51)
+			printf("K");
+	}
+
+
+
+}
+
+//revaloriza el valor del As de 11 a 1.
+int reval_as(int suma, int c3, int valmano[], int mano[], int* pvalmano) {
+
+	do {
+		if (0 <= mano[c3] && mano[c3] <= 3) {
+			valmano[c3] = 1;
+			c3--;
+			suma = suma - 10;
+		}
+		else {
+			c3--;
+		}
+	} while (suma > 21 && c3 == 0);
+
+	return suma;
+}
+
+//asocia su valor aleatorio con el correspondiente palo de la carta: corazones, diamantes, treboles y picas.
+void palo_cartas(int mano[], int c3) {
+
+	int palo;
+
+	palo = mano[c3] % 4;
+
+	if (palo == 0)
+		printf(" de \3 \n");
+	else if (palo == 1)
+		printf(" de \4 \n");
+	else if (palo == 2)
+		printf(" de \5 \n");
+	else if (palo == 3)
+		printf(" de \6 \n");
+
 }
