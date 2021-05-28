@@ -1,0 +1,18 @@
+
+ ____                                      _____                                      
+/\  _`\                                   /\___ \                                     
+\ \ \/\_\    ___     ___ ___      ___     \/__/\ \   __  __     __       __     _ __  
+ \ \ \/_/_  / __`\ /' __` __`\   / __`\      _\ \ \ /\ \/\ \  /'_ `\   /'__`\  /\`'__\
+  \ \ \_\ \/\ \_\ \/\ \/\ \/\ \ /\ \L\ \    /\ \_\ \\ \ \_\ \/\ \_\ \ /\ \_\.\_\ \ \/ 
+   \ \____/\ \____/\ \_\ \_\ \_\\ \____/    \ \____/ \ \____/\ \____ \\ \__/.\_\\ \_\ 
+    \/___/  \/___/  \/_/\/_/\/_/ \/___/      \/___/   \/___/  \/___\ \\/__/\/_/ \/_/ 
+                                                                /\____/               
+                                                                \_/__/                
+                      
+
+1.	Seleccione el número de jugadores que van a jugar.
+2.	Cada jugador debe elegir la cantidad de fichas que quiere apostar con un máximo de 50 fichas. Todos los jugadores empezaran con 100 fichas.
+3.	A cada jugador se le repartirán dos cartas, y al crupier una carta.
+4.	El jugador deberá elegir entre las opciones Plantarse o Pedir carta. Cuando sea relevante según las reglas también podrá elegir la opción de Doblar y pedir.
+5.	Una vez se termina la partida, si continua teniendo fichas podrá volver a jugar.
+                                                              

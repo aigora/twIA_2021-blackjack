@@ -1,0 +1,9 @@
+﻿  Source.cpp
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(123,15): warning C4101: 'opc': variable local sin referencia
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(252,12): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(680,4): warning C4551: la llamada a la función no tiene lista de argumentos
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(247,6): warning C4101: 'info': variable local sin referencia
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(889,23): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(140): warning C4715: 'opc1': no todas las rutas de acceso de control devuelven un valor
+C:\Users\Alberto\source\repos\pru\pru\Source.cpp(232): warning C4715: 'modo_normal': no todas las rutas de acceso de control devuelven un valor
+  pru.vcxproj -> C:\Users\Alberto\source\repos\pru\Debug\pru.exe

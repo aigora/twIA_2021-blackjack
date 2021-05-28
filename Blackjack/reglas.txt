@@ -1,0 +1,28 @@
+ ____                       ___                        
+/\  _`\                    /\_ \                       
+\ \ \_\ \      __      __  \//\ \       __       ____  
+ \ \ ,  /    /'__`\  /'_ `\  \ \ \    /'__`\    /',__\ 
+  \ \ \\ \  /\  __/ /\ \ \ \  \_\ \_ /\ \_\.\_ /\__, `\
+   \ \_\ \_\\ \____\\ \____ \ /\____\\ \__/.\_\\/\____/
+    \/_/\/ / \/____/ \/___ \ \\/____/ \/__/\/_/ \/___/ 
+                       /\____/                         
+                       \_/__/                          
+                                                 
+  
+
+
+•	El Black Jack se juega con 3 cajas y 6 barajas normales de 52 cartas (sin contar los comodines). En nuestro caso, jugaremos con una 	baraja sin repeticion.
+•	El objetivo del juego es crear una mano con un valor que esté a la par o más cerca a 21 que la mano del repartidor sin pasarse.
+•	Los números de las cartas cuentan lo que indica su valor, los Ases cuentan 1 u 11, y los Reyes, Reinas y Jotas cuentan como 10.
+•	No se le da ninguna preferencia a ninguno de los palos
+•	El juego se desarrolla con un crupier computarizado. El jugador recibe dos cartas y el croupier otras dos.
+•	Las cartas del jugador se colocan ambas boca arriba y solo se muestra la primera carta del croupier.
+•	Puedes Pedir carta, Doblar o Plantarte.
+•	Si decides Pedir carta, el valor de la nueva carta se sumará al inicial.
+•	La ronda de juego termina cuando el croupier termina su mano.
+•	Si tu mano esta mas cerca del 21 que la mano del repartidor sin pasarte, has ganado.
+•	El repartidor debe plantarse si tiene 17 o más, y tomar carta si tiene 16 o menos.
+•	Las manos de igual valor son un Empate, y recuperas lo apostado.
+•	Si tu mano suma 22 o más, pierdes sin que importe el valor de la mano del repartidor.
+•	En el caso de obtener 21 en las dos cartas iniciales, su apuesta se multiplicara por 2.5.
+•	Si tienes 7 cartas en tu mano y tu suma no se pasa de 21, tendras lo que se denomina como Charlie de 7 cartas. Se gana 	automaticamente la partida salvo que el crupier tambien tenga Charlie.
